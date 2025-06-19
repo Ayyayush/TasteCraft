@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 // filepath: src/App.js
-import Header from './Components/Header';
-import Body from './Components/Body';
+
+ import Header from './Components/Header';
+// import Body from './Components/Body';
 
 
 // ...existing code...
@@ -65,9 +66,11 @@ const Header = () => {
 
 // const RestaurantCard = ({ resName, cuisine }) => {
 //   console.log({ resName, cuisine });
+
+
+export const IMG_CDN_URL = "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/";
 const RestaurantCard = (props) => {
   const { resData } = props;
-
   const {
     cloudinaryImageId,
     name,
@@ -78,32 +81,11 @@ const RestaurantCard = (props) => {
   } = resData?.data;
 
   return (
-    <div
-      className="res-card"
-      style={{
-        backgroundColor: '#f0f0f0',
-      }}
-    >
+    <div className="res-card" style={{ backgroundColor: '#f0f0f0' }}>
       <img
-        className="res-logo"
-        // src={
-        //   'https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_264,h_288,c_fill/' +
-        //   resData.data.cloudinaryImageId
-        // }
-
-        src={
-          'https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_264,h_288,c_fill/' +
-          cloudinaryImageId
-        }
-        alt="Biryani"
+        src={IMG_CDN_URL + cloudinaryImageId}
+        alt={name}
       />
-      {/* <h3>{props.resName}</h3>
-        <h4>{props.cuisine}</h4> */}
-      {/* <h3>{resData.data.name}</h3>
-      <h4>{resData.data.cuisines.join(', ')}</h4>
-      <h4>{resData.data.avgRating} stars</h4>
-      <h4>₹{resData.data.costForTwo / 100} FOR TWO</h4>
-      <h4>{resData.data.deliveryTime} minutes</h4> */}
       <h3>{name}</h3>
       <h4>{cuisines.join(', ')}</h4>
       <h4>{avgRating} stars</h4>
@@ -112,6 +94,12 @@ const RestaurantCard = (props) => {
     </div>
   );
 };
+
+// ...resList array...
+
+
+
+
 
 const resList = [
   {
@@ -2159,6 +2147,9 @@ const resList = [
 
 // * not using keys (not acceptable) <<<< index as a key <<<<<<<<<< unique id (is the best  practice)
 
+
+
+
 const Body = () => {
   return (
     <div className="body">
@@ -2167,58 +2158,76 @@ const Body = () => {
         <button>Search</button>
       </div>
       <div className="res-container">
-        {/* <RestaurantCard resData={resList[0]} />
-        <RestaurantCard resData={resList[1]} />
-        <RestaurantCard resData={resList[2]} />
-        <RestaurantCard resData={resList[3]} />
-        <RestaurantCard resData={resList[4]} />
-        <RestaurantCard resData={resList[5]} />
-        <RestaurantCard resData={resList[6]} />
-        <RestaurantCard resData={resList[7]} />
-        <RestaurantCard resData={resList[8]} />
-        <RestaurantCard resData={resList[9]} />
-        <RestaurantCard resData={resList[10]} />
-        <RestaurantCard resData={resList[11]} />
-        <RestaurantCard resData={resList[12]} /> */}
-
-        {/* // * looping through the <RestaurentCard /> components Using Array.map() method */}
-
         {resList.map((restaurant) => (
           <RestaurantCard key={restaurant.data.id} resData={restaurant} />
         ))}
-
-        {/* // * or */}
-
-        {/* // * We can also use index as the key to the JSX child elemnt - which is the 2nd parameter of the map() method, but is not a recommended practice - react official Docs declared this/}
-
-        {resList.map((restaurant, index) => (
-          <RestaurantCard key={index} resData={restaurant} />
-        ))}
-
-        {/* // * Why should we provide key property to the child elements - When creating a list in the UI from an array with JSX, you should add a key prop to each child and to any of its' children. React uses the key prop create a relationship between the component and the DOM element. The library uses this relationship to determine whether or not the component should be re-rendered.
-         */}
       </div>
     </div>
   );
 };
 
-// * What is Config-driven-UI -> A "config-driven UI" is a user interface that is built and configured using a declarative configuration file or data structure, rather than being hardcoded.
 
-// * Every company now-a-days follows these approach, because our Appications need to be Dynamic These Days
 
-// * Note: A Good Senior Frontend engineer is - who is a good UI Layer Engineer and a good Data Layer Engineer
+
+
+// const Body = () => {
+//   return (
+//     <div className="body">
+//       <div className="search-container">
+//         <input type="text" placeholder="Search Food or Restaurant" />
+//         <button>Search</button>
+//       </div>
+//       <div className="res-container">
+//         {/* <RestaurantCard resData={resList[0]} />
+//         <RestaurantCard resData={resList[1]} />
+//         <RestaurantCard resData={resList[2]} />
+//         <RestaurantCard resData={resList[3]} />
+//         <RestaurantCard resData={resList[4]} />
+//         <RestaurantCard resData={resList[5]} />
+//         <RestaurantCard resData={resList[6]} />
+//         <RestaurantCard resData={resList[7]} />
+//         <RestaurantCard resData={resList[8]} />
+//         <RestaurantCard resData={resList[9]} />
+//         <RestaurantCard resData={resList[10]} />
+//         <RestaurantCard resData={resList[11]} />
+//         <RestaurantCard resData={resList[12]} /> */}
+
+//         {/* // * looping through the <RestaurentCard /> components Using Array.map() method */}
+
+//         {resList.map((restaurant) => (
+//           <RestaurantCard key={restaurant.data.id} resData={restaurant} />
+//         ))}
+
+//         {/* // * or */}
+
+//         {/* // * We can also use index as the key to the JSX child elemnt - which is the 2nd parameter of the map() method, but is not a recommended practice - react official Docs declared this/}
+
+//         {resList.map((restaurant, index) => (
+//           <RestaurantCard key={index} resData={restaurant} />
+//         ))}
+
+//         {/* // * Why should we provide key property to the child elements - When creating a list in the UI from an array with JSX, you should add a key prop to each child and to any of its' children. React uses the key prop create a relationship between the component and the DOM element. The library uses this relationship to determine whether or not the component should be re-rendered.
+//          */}
+//       </div>
+//     </div>
+//   );
+// };
+
+// // * What is Config-driven-UI -> A "config-driven UI" is a user interface that is built and configured using a declarative configuration file or data structure, rather than being hardcoded.
+
+// // * Every company now-a-days follows these approach, because our Appications need to be Dynamic These Days
+
+// // * Note: A Good Senior Frontend engineer is - who is a good UI Layer Engineer and a good Data Layer Engineer
 
 const currYear = new Date().getFullYear();
 
-const Footer = () => {
-  return (
-    <footer className="footer">
-      <p>
-        Copyright &copy; {currYear}, Made with 💗 by <strong>Vasu</strong>
-      </p>
-    </footer>
-  );
-};
+const Footer = () => (
+  <footer className="footer">
+    <p>
+      Copyright &copy; {new Date().getFullYear()}, Built by <strong>AYUSH🚀</strong>
+    </p>
+  </footer>
+);
 
 const AppLayout = () => {
   return (
