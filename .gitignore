@@ -1,0 +1,21 @@
+# node_modules folder - always ignore this
+node_modules/
+
+# Parcel cache
+.parcel-cache/
+
+# build output
+build/
+dist/
+
+# logs and temporary files
+*.log
+.DS_Store
+
+# OS-specific and editor-specific files
+.env
+.vscode/
+.idea/
+
+# custom folders or files
+0-HomeWork/
