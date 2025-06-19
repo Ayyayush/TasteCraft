@@ -1,4 +1,5 @@
 import { IMG_URL } from "../../utils/constants";
+import { CDN_URL } from "../../utils/constants";
 
 
 const RestaurantCard = (props) => {

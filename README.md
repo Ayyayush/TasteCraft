@@ -45,22 +45,17 @@ In your existing project
 
 
 
+
+
+
 ## Namaste React Course by Akshay Saini
-
 # Chapter 03 - Laying the Foundation Coding Assignment
-
 ## Q: Create a `Nested header Element` using `React.createElement`(h1,h2,h3 inside a div with class "title")
-
 ## Q: Create the `same element using JSX`
-
 ## Q: Create a `functional component of the same with JSX`
-
 ## Q: Pass `attribute into the tag in JSX`
-
 ## Q: `Composition of Component` (Add a component inside another)
-
 ## Q: `{TitleComponent}` vs `{<TitleComponent/>}` vs `{<TitleComponent></TitleComponent>}` in JSX.
-
 ## Q: Create a `Header Component from scratch` using `Functional Component with JSX`
 
 - Add a Logo on Left
@@ -79,6 +74,9 @@ In your existing project
 ## Q: Create a `Header Component from scratch` using `Functional Component with JSX`
 
 ## A: [Header Component](https://header-assignment.netlify.app/)
+
+
+
 
 
 
@@ -103,3 +101,28 @@ In your existing project
       - Use `Array.map` to render all the restaurants
 
 ## [😋 Food App Basic Layout 😍](https://food-app-basic-layout.netlify.app/)
+
+
+
+
+
+
+
+// ...existing code...
+/* Components of Our Food-Order App
+ * Header
+ * - Logo
+ * - Nav Items
+ * Body
+ * - Search Bar
+ * - Restaurant-Container
+ *  - Restaurant-Card
+ *    - Img
+ *    - Name of Res, Star Rating, cuisine, delivery time.
+ * Footer
+ * - Copyright
+ * - Links
+ * - Address
+ * - Contact
+ */
+
