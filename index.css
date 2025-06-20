@@ -124,11 +124,23 @@
   color: #222;
 }
 
+/* Remove blue color and underline from restaurant card links */
+.res-container a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.res-container a:hover {
+  text-decoration: underline;
+  color: #333; /* or any color you prefer */
+}
 .shimmer-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
+
 
 .shimmer-card {
   width: 200px;

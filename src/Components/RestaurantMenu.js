@@ -1,101 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
 
-// filepath: src/App.js
-import { useState, useEffect } from "react";
-import Header from "./Components/Header";
-//import Body from './Components/Body';
-import Shimmer from "./Components/Shimmer";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import About from "./Components/About";
-import Contact from "./Components/Contact";
-import Error from "./Components/Error";
-import RestaurantMenu from "./Components/RestaurantMenu";
-import { Link } from "react-router-dom";  
-
-//  const styleCard = {
-//   backgroundColor: '#f0f0f0',
-// };
-// ...existing imports and code...
-
-
-
-const IMG_CDN_URL =
-  "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/";
-
-const RestaurantCard = (props) => {
-  const { resData } = props;
-  const {
-    cloudinaryImageId,
-    name,
-    cuisines,
-    avgRating,
-    costForTwo,
-    deliveryTime,
-  } = resData?.data;
-
-  return (
-    <div className="res-card">
-      <img
-        className="res-logo"
-        src={IMG_CDN_URL + cloudinaryImageId}
-        alt={name}
-      />
-      <div
-        style={{
-          padding: "14px 12px 12px 12px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "6px",
-          textAlign: "left",
-          background: "#fff",
-        }}
-      >
-        <h3
-          style={{
-            fontSize: "1.1rem",
-            fontWeight: "bold",
-            margin: "0 0 2px 0",
-          }}
-        >
-          {name}
-        </h3>
-        <h4
-          style={{
-            fontSize: "0.98rem",
-            fontWeight: "bold",
-            margin: "0 0 1px 0",
-          }}
-        >
-          {cuisines.join(", ")}
-        </h4>
-        <h4
-          style={{
-            fontSize: "0.98rem",
-            fontWeight: "bold",
-            margin: "0 0 1px 0",
-          }}
-        >
-          {avgRating} stars
-        </h4>
-        <h4
-          style={{
-            fontSize: "0.98rem",
-            fontWeight: "bold",
-            margin: "0 0 1px 0",
-          }}
-        >
-          ₹{costForTwo / 100} FOR TWO
-        </h4>
-        <h4 style={{ fontSize: "0.98rem", fontWeight: "bold", margin: "0" }}>
-          {deliveryTime} minutes
-        </h4>
-      </div>
-    </div>
-  );
-};
-// ...resList array...
-
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Shimmer from "./Shimmer";
+// import resList from ... // Make sure resList is imported or available
 
 
 const resList = [
@@ -2142,163 +2049,44 @@ const resList = [
   },
 ];
 
-// * not using keys (not acceptable) <<<< index as a key <<<<<<<<<< unique id (is the best  practice)
-
-// const Body = () => {
-//   return (
-//     <div className="body">
-//       <div className="search-container">
-//         <input type="text" placeholder="Search Food or Restaurant" />
-//         <button>Search</button>
-//       </div>
-//       <div className="res-container">
-//         {resList.map((restaurant) => (
-//           <RestaurantCard key={restaurant.data.id} resData={restaurant} />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-
-const Body = () => {
-  const [searchText, setSearchText] = useState("");
-  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+const RestaurantMenu = () => {
+  const { resid } = useParams();
   const [loading, setLoading] = useState(true);
+  const [restaurant, setRestaurant] = useState(null);
 
-  // Simulate fetching data with shimmer
   useEffect(() => {
     setLoading(true);
+    // Simulate fetch delay
     const timer = setTimeout(() => {
-      setFilteredRestaurants(resList);
+      const found = resList.find((res) => res.data.id === resid);
+      setRestaurant(found);
       setLoading(false);
-    }, 1000);
+    }, 800);
     return () => clearTimeout(timer);
-  }, []);
+  }, [resid]);
 
-  // Filter restaurants by search text
-  const handleSearch = () => {
-    setLoading(true);
-    const filtered = resList.filter((res) =>
-      res.data.name.toLowerCase().includes(searchText.toLowerCase())
-    );
-    setTimeout(() => {
-      setFilteredRestaurants(filtered);
-      setLoading(false);
-    }, 500);
-  };
+  if (loading) return <Shimmer />;
 
-  // Show all if search is cleared
-  useEffect(() => {
-    if (searchText === "") {
-      setLoading(true);
-      const timer = setTimeout(() => {
-        setFilteredRestaurants(resList);
-        setLoading(false);
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [searchText]);
+  if (!restaurant)
+    return <div style={{ padding: "2rem" }}>Restaurant not found.</div>;
+
+  const { name, cuisines, costForTwo, costForTwoString } = restaurant.data;
 
   return (
-    <div className="body">
-      <div className="filter">
-        <div className="search">
-          <input
-            type="text"
-            placeholder="Search a restaurant you want..."
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-          <button onClick={handleSearch}>Search</button>
-        </div>
-        <button
-          className="filter-btn"
-          onClick={() => {
-            setLoading(true);
-            const filteredList = resList.filter(
-              (res) => res.data.avgRating > 4
-            );
-            setTimeout(() => {
-              setFilteredRestaurants(filteredList);
-              setLoading(false);
-            }, 500);
-          }}
-        >
-          Top Rated Restaurants
-        </button>
-      </div>
-      <div className="res-container">
-        {loading ? (
-          <Shimmer />
-        ) : (
-          filteredRestaurants.map((restaurant) => (
-            <Link
-              key={restaurant.data.id}
-              to={`/restaurants/${restaurant.data.id}`}
-            >
-              <RestaurantCard resData={restaurant} />
-            </Link>
-          ))
-        )}
-      </div>
+    <div style={{ padding: "2rem" }}>
+      <h2>{name} Menu</h2>
+      <ul>
+        {cuisines.map((cuisine, idx) => (
+          <li key={idx}>
+            {cuisine} - ₹{costForTwo ? costForTwo / cuisines.length / 100 : "N/A"}
+          </li>
+        ))}
+      </ul>
+      <p>
+        <b>Total Cost for Two:</b> {costForTwoString}
+      </p>
     </div>
   );
 };
 
-
-const currYear = new Date().getFullYear();
-
-const Footer = () => (
-  <footer className="footer">
-    <p>
-      Copyright &copy; {new Date().getFullYear()}, Built by{" "}
-      <strong>AYUSH🚀</strong>
-    </p>
-  </footer>
-);
-
-
- 
-const AppLayout = () => {
-  return (
-    <div className="app">
-      <Header />
-      <Outlet/>
-      <Footer />
-    </div>
-  );
-};
-
-
-
-
-const appRouter = createBrowserRouter([
-  {
-    path: "/",
-    element: <AppLayout />,
-    errorElement: <Error />,
-    children: [
-      {
-        path: "/",
-        element: <Body />,
-      },
-      {
-        path: "about", // <-- lowercase, no slash
-        element: <About />,
-      },
-      {
-        path: "contact", // <-- lowercase, no slash
-        element: <Contact />,
-      },
-      {
-path: "restaurants/:resid", // <-- dynamic route
-        element: <RestaurantMenu />,
-      },
-    ],
-  },
-]);
-
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<RouterProvider router={appRouter} />);
+export default RestaurantMenu;
