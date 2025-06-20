@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 // filepath: src/App.js
 
  import Header from './Components/Header';
-import Body from './Components/Body';
+//import Body from './Components/Body';
 
 
 
@@ -28,8 +28,10 @@ import Body from './Components/Body';
 // const RestaurantCard = ({ resName, cuisine }) => {
 //   console.log({ resName, cuisine });
 
+// ...existing imports and code...
 
-export const IMG_CDN_URL = "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/";
+const IMG_CDN_URL = "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/";
+
 const RestaurantCard = (props) => {
   const { resData } = props;
   const {
@@ -42,20 +44,29 @@ const RestaurantCard = (props) => {
   } = resData?.data;
 
   return (
-    <div className="res-card" style={{ backgroundColor: '#f0f0f0' }}>
+    <div className="res-card">
       <img
+        className="res-logo"
         src={IMG_CDN_URL + cloudinaryImageId}
         alt={name}
       />
-      <h3>{name}</h3>
-      <h4>{cuisines.join(', ')}</h4>
-      <h4>{avgRating} stars</h4>
-      <h4>₹{costForTwo / 100} FOR TWO</h4>
-      <h4>{deliveryTime} minutes</h4>
+      <div style={{
+        padding: "14px 12px 12px 12px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "6px",
+        textAlign: "left",
+        background: "#fff"
+      }}>
+        <h3 style={{ fontSize: "1.1rem", fontWeight: "bold", margin: "0 0 2px 0" }}>{name}</h3>
+        <h4 style={{ fontSize: "0.98rem", fontWeight: "bold", margin: "0 0 1px 0" }}>{cuisines.join(', ')}</h4>
+        <h4 style={{ fontSize: "0.98rem", fontWeight: "bold", margin: "0 0 1px 0" }}>{avgRating} stars</h4>
+        <h4 style={{ fontSize: "0.98rem", fontWeight: "bold", margin: "0 0 1px 0" }}>₹{costForTwo / 100} FOR TWO</h4>
+        <h4 style={{ fontSize: "0.98rem", fontWeight: "bold", margin: "0" }}>{deliveryTime} minutes</h4>
+      </div>
     </div>
   );
 };
-
 // ...resList array...
 
 
@@ -2126,6 +2137,61 @@ const resList = [
 //     </div>
 //   );
 // };
+
+
+
+
+
+const Body = () => {
+  const [searchText, setSearchText] = React.useState('');
+  const [filteredRestaurants, setFilteredRestaurants] = React.useState(resList);
+
+  // Filter restaurants by search text
+  const handleSearch = () => {
+    const filtered = resList.filter((res) =>
+      res.data.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredRestaurants(filtered);
+  };
+
+  // Optional: Show all if search is cleared
+  React.useEffect(() => {
+    if (searchText === '') setFilteredRestaurants(resList);
+  }, [searchText]);
+
+  return (
+    <div className="body">
+      <div className="filter">
+        <div className="search">
+          <input
+            type="text"
+            placeholder="Search a restaurant you want..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+          <button onClick={handleSearch}>Search</button>
+        </div>
+        <button
+          className="filter-btn"
+          onClick={() => {
+            const filteredList = resList.filter(
+              (res) => res.data.avgRating > 4
+            );
+            setFilteredRestaurants(filteredList);
+          }}
+        >
+          Top Rated Restaurants
+        </button>
+      </div>
+      <div className="res-container">
+        {filteredRestaurants.map((restaurant) => (
+          <RestaurantCard key={restaurant.data.id} resData={restaurant} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 
 
 
