@@ -6,7 +6,7 @@ const About = () => {
     <div>
       <h1>About</h1>
       <h2>This is TasteCraft</h2>
-      <User name={"AYUSH🚀"} />
+      {/* <User name={"AYUSH🚀"} /> */}
       <UserClass />
       <h4>
         We are a food delivery service that
