@@ -40,3 +40,23 @@ class UserClass extends React.Component {
 }
 
 export default UserClass;
+
+
+
+
+/*
+- Parent Constructor
+- Parent render
+
+    - First Constructor
+    - First Render
+
+    - Second Constructor
+    - Second Render
+
+<DOM UPDATED - BATCH>
+    - First ComponentDidMount
+    - Second ComponentDidMount
+
+- Parent ComponentDidMount
+*/
