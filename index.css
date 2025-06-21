@@ -212,3 +212,10 @@
 .filter-btn:hover {
   background-color: #09a909;
 }
+
+.user-card
+{
+  padding:10px;
+ 
+  border: 1px solid black;
+}
