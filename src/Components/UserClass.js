@@ -3,10 +3,14 @@ import React from "react";
 class UserClass extends React.Component {
   constructor(props) {
     super(props);
-    // state banaya, count ki initial value 0
+    // state ko initialize kiya, warna error aayega
     this.state = {
       count: 0,
     };
+  }
+
+  componentDidMount() {
+    console.log("Child Component Did Mount");
   }
 
   render() {
