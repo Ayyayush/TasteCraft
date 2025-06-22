@@ -11,7 +11,8 @@ import About from "./Components/About";
 import Contact from "./Components/Contact";
 import Error from "./Components/Error";
 import RestaurantMenu from "./Components/RestaurantMenu";
-import { Link } from "react-router-dom";  
+import { Link } from "react-router-dom"; 
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 //  const styleCard = {
 //   backgroundColor: '#f0f0f0',
@@ -2160,13 +2161,26 @@ const resList = [
 //   );
 // };
 
+// ...existing imports...
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Simulate fetching data with shimmer
+  // Use the custom hook
+  const onlineStatus = useOnlineStatus();
+
+  // Show offline message if user is offline
+  if (!onlineStatus) {
+    return (
+      <div style={{ textAlign: "center", marginTop: "2rem", color: "red" }}>
+        <h1>You are currently offline. Please check your internet connection.</h1>
+      </div>
+    );
+  }
+
+  // ...rest of your Body component code...
   useEffect(() => {
     setLoading(true);
     const timer = setTimeout(() => {
@@ -2176,7 +2190,6 @@ const Body = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Filter restaurants by search text
   const handleSearch = () => {
     setLoading(true);
     const filtered = resList.filter((res) =>
@@ -2188,7 +2201,6 @@ const Body = () => {
     }, 500);
   };
 
-  // Show all if search is cleared
   useEffect(() => {
     if (searchText === "") {
       setLoading(true);
@@ -2245,7 +2257,6 @@ const Body = () => {
     </div>
   );
 };
-
 
 const currYear = new Date().getFullYear();
 
