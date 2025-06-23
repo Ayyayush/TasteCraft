@@ -121,8 +121,7 @@ async function getRestaurants() {
 
   return listOfRestaurants.length === 0 ? (
     <Shimmer />
-  ) : (
-    <div className="body">
+  ) : (    <div className="body">
       <div className="filter">
         <div className="search">
           <input
@@ -142,8 +141,7 @@ async function getRestaurants() {
           >
             Search
           </button>
-        </div>
-        <button
+        </div>        <button
           className="filter-btn"
           onClick={() => {
             const filteredList = listOfRestaurants.filter(

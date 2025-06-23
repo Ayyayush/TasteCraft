@@ -1,13 +1,12 @@
 import React from "react";
 import Shimmer from "./Shimmer"; // Shimmer ko import karo
 
-class UserClass extends React.Component {
-  constructor(props) {
+class UserClass extends React.Component {  constructor(props) {
     super(props);
     // state ko initialize kiya, warna error aayega
     this.state = {
       userInfo: {
-        name: "Ayyayush",
+        name: "Ayush Pandey",
         location: "Jamshedpur",
         avatar_url: "https://avatars.githubusercontent.com/u/140370865?v=4",
       },
@@ -45,19 +44,21 @@ class UserClass extends React.Component {
   render() {
     // state se name, location, avatar_url, loading destructure kiya
     const { name, location, avatar_url } = this.state.userInfo;
-    const { loading } = this.state;
-
-    return (
-      <div className="user-card">
-        <h2>Name: {name}</h2>
+    const { loading } = this.state;    return (
+      <div className="user-card max-w-sm mx-auto bg-white rounded-lg shadow-lg p-6 text-center">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Name: {name}</h2>
         {/* Agar loading hai toh Shimmer dikhaye, warna avatar dikhaye */}
         {loading ? (
           <Shimmer />
         ) : (
-          <img src={avatar_url} alt="User Avatar" className="user-avatar" />
+          <img 
+            src={avatar_url} 
+            alt="User Avatar" 
+            className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-gray-200 shadow-lg hover:scale-105 transition-transform duration-300 object-cover" 
+          />
         )}
-        <h3>Location: {location}</h3>
-        <h4>Contact: @treddytech</h4>
+        <h3 className="text-lg text-gray-600 mb-2">Location: {location}</h3>
+        <h4 className="text-md text-gray-500">Contact: @treddytech</h4>
       </div>
     );
   }

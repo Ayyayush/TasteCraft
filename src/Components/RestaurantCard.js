@@ -1,55 +1,10 @@
-import { IMG_URL } from "../../utils/constants";
 import { CDN_URL } from "../../utils/constants";
-
-
-// const RestaurantCard = (props) => {
-//   const { resData } = props;
-//   const {
-//     cloudinaryImageId,
-//     name,
-//     cuisines,
-//     avgRating,
-//     costForTwo,
-//     deliveryTime,
-//   } = resData?.data;
-
-//   // Use Swiggy CDN format, fallback to a placeholder if imageId is missing
-//   const imageUrl = cloudinaryImageId
-//     ? `${IMG_URL}${cloudinaryImageId}`
-//     : 'https://via.placeholder.com/264x288?text=No+Image';
-
-//   return (
-//     <div
-//       className="res-card"
-//       style={{
-//         backgroundColor: '#f0f0f0',
-//         padding: '16px',
-//         borderRadius: '8px',
-//         margin: '12px',
-//         width: '250px',
-//         boxSizing: 'border-box',
-//       }}
-//     >
-//       <img
-//         className="res-logo"
-//         src={imageUrl}
-//         alt={name}
-//         style={{ width: '100%', borderRadius: '6px' }}
-//       />
-//       <div className="res-details" style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
-//         <h3>{name}</h3>
-//         <h4>{cuisines.join(', ')}</h4>
-//         <h4>{avgRating} stars</h4>
-//         <h4>₹{costForTwo / 100} FOR TWO</h4>
-//         <h4>{deliveryTime} minutes</h4>
-//       </div>
-//     </div>
-//   );
-// };
-
+import { FiClock } from 'react-icons/fi';
+import { AiOutlineStar } from 'react-icons/ai';
 
 const RestaurantCard = (props) => {
   const { resData } = props;
+
   const {
     cloudinaryImageId,
     name,
@@ -60,18 +15,34 @@ const RestaurantCard = (props) => {
   } = resData?.data;
 
   return (
-    <div className="res-card">
-      <img
-        className="res-logo"
-        src={IMG_CDN_URL + cloudinaryImageId}
-        alt={name}
-      />
-      <div className="res-card-content">
-        <h3>{name}</h3>
-        <h4>{cuisines.join(', ')}</h4>
-        <h4>{avgRating} stars</h4>
-        <h4>₹{costForTwo / 100} FOR TWO</h4>
-        <h4>{deliveryTime} minutes</h4>
+    <div className="m-4 p-4 w-[250px] bg-gray-100 rounded-lg hover:bg-gray-200 transition-all">
+      <div>
+        <img
+          className="w-[250px] h-[150px] rounded-lg"
+          src={CDN_URL + cloudinaryImageId}
+          alt={name}
+        />
+      </div>
+
+      <div>
+        <h3 className="font-bold py-4 text-lg">{name}</h3>
+        <hr />
+        <em>{cuisines.join(', ')}</em>
+        <h4 className="avg-rating flex items-center mt-2">
+          <span className="icons">
+            <AiOutlineStar />
+          </span>
+          <span className="ml-1">{avgRating} stars</span>
+        </h4>
+        <h4 className="item-price flex items-center">
+          <span>₹{costForTwo / 100} FOR TWO</span>
+        </h4>
+        <h4 className="time flex items-center">
+          <span className="icons">
+            <FiClock />
+          </span>
+          <span className="ml-1">{deliveryTime} minutes</span>
+        </h4>
       </div>
     </div>
   );

@@ -1,15 +1,1 @@
-{
-  "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html"
-  },
-  "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-router": "^6.30.1",
-    "react-router-dom": "^6.30.1"
-  },
-  "devDependencies": {
-    "parcel": "^2.15.2"
-  }
-}
+{"scripts":{"start":"parcel index.html","build":"parcel build index.html","build-css":"npx tailwindcss -i ./src/input.css -o ./src/output.css --watch"},"dependencies":{"@tailwindcss/postcss":"^4.1.10","autoprefixer":"^10.4.21","react":"^19.1.0","react-dom":"^19.1.0","react-icons":"^5.5.0","react-router":"^6.30.1","react-router-dom":"^6.30.1","styled-components":"^6.1.19","tailwindcss":"^4.1.10"},"devDependencies":{"parcel":"^2.15.2"}}

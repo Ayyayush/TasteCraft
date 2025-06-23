@@ -10,6 +10,8 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Error from "./Components/Error";
 import { Link } from "react-router-dom"; 
 import useOnlineStatus from "../utils/useOnlineStatus";
+import { FiClock } from 'react-icons/fi';
+import { AiOutlineStar } from 'react-icons/ai';
 
 // Lazy loading components for better performance
 const About = lazy(() => import("./Components/About"));
@@ -39,60 +41,33 @@ const RestaurantCard = (props) => {
   } = resData?.data;
 
   return (
-    <div className="res-card">
-      <img
-        className="res-logo"
-        src={IMG_CDN_URL + cloudinaryImageId}
-        alt={name}
-      />
-      <div
-        style={{
-          padding: "14px 12px 12px 12px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "6px",
-          textAlign: "left",
-          background: "#fff",
-        }}
-      >
-        <h3
-          style={{
-            fontSize: "1.1rem",
-            fontWeight: "bold",
-            margin: "0 0 2px 0",
-          }}
-        >
-          {name}
-        </h3>
-        <h4
-          style={{
-            fontSize: "0.98rem",
-            fontWeight: "bold",
-            margin: "0 0 1px 0",
-          }}
-        >
-          {cuisines.join(", ")}
+    <div className="m-4 p-4 w-[250px] bg-gray-100 rounded-lg hover:bg-gray-200 transition-all">
+      <div>
+        <img
+          className="w-[250px] h-[150px] rounded-lg"
+          src={IMG_CDN_URL + cloudinaryImageId}
+          alt={name}
+        />
+      </div>
+
+      <div>
+        <h3 className="font-bold py-4 text-lg">{name}</h3>
+        <hr />
+        <em>{cuisines.join(', ')}</em>
+        <h4 className="avg-rating flex items-center mt-2">
+          <span className="icons">
+            <AiOutlineStar />
+          </span>
+          <span className="ml-1">{avgRating} stars</span>
         </h4>
-        <h4
-          style={{
-            fontSize: "0.98rem",
-            fontWeight: "bold",
-            margin: "0 0 1px 0",
-          }}
-        >
-          {avgRating} stars
+        <h4 className="item-price flex items-center">
+          <span>₹{costForTwo / 100} FOR TWO</span>
         </h4>
-        <h4
-          style={{
-            fontSize: "0.98rem",
-            fontWeight: "bold",
-            margin: "0 0 1px 0",
-          }}
-        >
-          ₹{costForTwo / 100} FOR TWO
-        </h4>
-        <h4 style={{ fontSize: "0.98rem", fontWeight: "bold", margin: "0" }}>
-          {deliveryTime} minutes
+        <h4 className="time flex items-center">
+          <span className="icons">
+            <FiClock />
+          </span>
+          <span className="ml-1">{deliveryTime} minutes</span>
         </h4>
       </div>
     </div>
@@ -2214,48 +2189,59 @@ const Body = () => {
       return () => clearTimeout(timer);
     }
   }, [searchText]);
-
   return (
-    <div className="body">
-      <div className="filter">
-        <div className="search">
-          <input
-            type="text"
-            placeholder="Search a restaurant you want..."
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-          <button onClick={handleSearch}>Search</button>
-        </div>
-        <button
-          className="filter-btn"
-          onClick={() => {
-            setLoading(true);
-            const filteredList = resList.filter(
-              (res) => res.data.avgRating > 4
-            );
-            setTimeout(() => {
-              setFilteredRestaurants(filteredList);
-              setLoading(false);
-            }, 500);
-          }}
-        >
-          Top Rated Restaurants
-        </button>
-      </div>
-      <div className="res-container">
-        {loading ? (
-          <Shimmer />
-        ) : (
-          filteredRestaurants.map((restaurant) => (
-            <Link
-              key={restaurant.data.id}
-              to={`/restaurants/${restaurant.data.id}`}
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="mb-8">
+          <div className="flex flex-col md:flex-row gap-4 items-center justify-center mb-6">
+            <div className="flex w-full md:w-96">
+              <input
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                type="text"
+                placeholder="Search a restaurant you want..."
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+              <button 
+                className="px-6 py-3 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
+                onClick={handleSearch}
+              >
+                Search
+              </button>
+            </div>
+            <button
+              className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium whitespace-nowrap"
+              onClick={() => {
+                setLoading(true);
+                const filteredList = resList.filter(
+                  (res) => res.data.avgRating > 4
+                );
+                setTimeout(() => {
+                  setFilteredRestaurants(filteredList);
+                  setLoading(false);
+                }, 500);
+              }}
             >
-              <RestaurantCard resData={restaurant} />
-            </Link>
-          ))
-        )}
+              Top Rated Restaurants
+            </button>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {loading ? (
+            <Shimmer />
+          ) : (
+            filteredRestaurants.map((restaurant) => (
+              <Link
+                key={restaurant.data.id}
+                to={`/restaurants/${restaurant.data.id}`}
+                className="group"
+              >
+                <RestaurantCard resData={restaurant} />
+              </Link>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
@@ -2264,8 +2250,8 @@ const Body = () => {
 const currYear = new Date().getFullYear();
 
 const Footer = () => (
-  <footer className="footer">
-    <p>
+  <footer className="text-white py-4 mt-8" style={{backgroundColor: '#9BC09C'}}>
+    <p className="text-center">
       Copyright &copy; {new Date().getFullYear()}, Built by{" "}
       <strong>AYUSH🚀</strong>
     </p>

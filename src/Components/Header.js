@@ -1,52 +1,58 @@
 import { useState } from "react";
-import { LOGO_URL } from "../../utils/constants";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../../utils/useOnlineStatus";
 
 const Header = () => {
-  const [btnName, setBtnName] = useState("login");
-  const onlineStatus = useOnlineStatus();
-
-  return (
-    <div className="header">
+  const [btnNameReact, setBtnNameReact] = useState("Login");
+  const onlineStatus = useOnlineStatus();  return (
+    <header className="flex justify-between text-white font-[500] shadow-lg" style={{backgroundColor: '#9BC09C'}}>
       <div className="logo-container">
-        <img
-          src={LOGO_URL}
-          alt="App Logo"
-          className="logo"
-        />
+        <Link to="/">
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/3655/3655682.png"
+            alt="Logo"
+            className="w-16 mx-6 mt-2"
+          />
+        </Link>
       </div>
-      <div className="nav-items">
-        <ul>
-          <li>
-            Online Status: {onlineStatus ? "✅" : "❌"}
+      <div className="flex items-center">
+        <ul className="flex p-4 m-4">
+          <li className="px-4">Online Status: {onlineStatus ? "✅" : "⛔"}</li>
+          <li className="px-4">
+            <Link to="/" className="links">
+              Home
+            </Link>
           </li>
-          <li>
-            <Link to="/">Home</Link>
+          <li className="px-4">
+            <Link to="/about" className="links">
+              About Us
+            </Link>
           </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>          <li>
-            <Link to="/contact">Contact Us</Link>
+          <li className="px-4">
+            <Link to="/contact" className="links">
+              Contact Us
+            </Link>
           </li>
-          <li>
-            <Link to="/grocery">Grocery</Link>
-          </li>
-          <li>
-            Cart
+          <li className="px-4">
+            <Link to="/grocery" className="links">
+              Grocery
+            </Link>          </li>          <li className="px-4">
+            <Link className="links">Cart</Link>
           </li>
           <button
-            className="login"
+            className="loginBtn"
             onClick={() => {
-              setBtnName(btnName === "login" ? "logout" : "login");
-              console.log(btnName === "login" ? "logout" : "login");
+              btnNameReact === "Login"
+                ? setBtnNameReact("Logout")
+                : setBtnNameReact("Login");
+              console.log(btnNameReact);
             }}
           >
-            {btnName}
+            {btnNameReact}
           </button>
         </ul>
       </div>
-    </div>
+    </header>
   );
 };
 
