@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 
 // filepath: src/App.js
@@ -7,12 +7,15 @@ import Header from "./Components/Header";
 //import Body from './Components/Body';
 import Shimmer from "./Components/Shimmer";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import About from "./Components/About";
-import Contact from "./Components/Contact";
 import Error from "./Components/Error";
-import RestaurantMenu from "./Components/RestaurantMenu";
 import { Link } from "react-router-dom"; 
 import useOnlineStatus from "../utils/useOnlineStatus";
+
+// Lazy loading components for better performance
+const About = lazy(() => import("./Components/About"));
+const Contact = lazy(() => import("./Components/Contact"));
+const Grocery = lazy(() => import("./Components/Grocery"));
+const RestaurantMenu = lazy(() => import("./Components/RestaurantMenu"));
 
 //  const styleCard = {
 //   backgroundColor: '#f0f0f0',
@@ -2303,6 +2306,10 @@ const appRouter = createBrowserRouter([
         element: <Contact />,
       },
       {
+        path: "grocery", // <-- lowercase, no slash
+        element: <Grocery />,
+      },
+      {
 path: "restaurants/:resid", // <-- dynamic route
         element: <RestaurantMenu />,
       },
@@ -2312,4 +2319,8 @@ path: "restaurants/:resid", // <-- dynamic route
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<RouterProvider router={appRouter} />);
+root.render(
+  <Suspense fallback={<div style={{textAlign: 'center', marginTop: '2rem'}}>Loading...</div>}>
+    <RouterProvider router={appRouter} />
+  </Suspense>
+);
