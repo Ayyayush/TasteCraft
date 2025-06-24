@@ -1,7 +1,8 @@
 import React from "react";
 import Shimmer from "./Shimmer"; // Shimmer ko import karo
 
-class UserClass extends React.Component {  constructor(props) {
+class UserClass extends React.Component {
+  constructor(props) {
     super(props);
     // state ko initialize kiya, warna error aayega
     this.state = {
@@ -13,22 +14,34 @@ class UserClass extends React.Component {  constructor(props) {
       loading: true, // loading state add kiya
     };
   }
-
   async componentDidMount() {
-    // API call kiya GitHub user info ke liye
-    const data = await fetch("https://api.github.com/users/Ayyayush");
-    const json = await data.json();
-    console.log(json);
+    try {
+      // API call kiya GitHub user info ke liye
+      const data = await fetch("https://api.github.com/users/Ayyayush");
+      
+      if (!data.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+      
+      const json = await data.json();
+      console.log(json);
 
-    // state ko update kiya API se aayi value se
-    this.setState({
-      userInfo: {
-        name: json.name,
-        location: json.location,
-        avatar_url: json.avatar_url, // avatar_url bhi update kiya
-      },
-      loading: false, // loading false kar diya
-    });
+      // state ko update kiya API se aayi value se
+      this.setState({
+        userInfo: {
+          name: json.name || "Ayush Pandey",
+          location: json.location || "Jamshedpur",
+          avatar_url: json.avatar_url || "https://avatars.githubusercontent.com/u/140370865?v=4",
+        },
+        loading: false, // loading false kar diya
+      });
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      // Keep default values and stop loading
+      this.setState({
+        loading: false,
+      });
+    }
   }
 
   componentDidUpdate() {
@@ -41,10 +54,11 @@ class UserClass extends React.Component {  constructor(props) {
     // Agar koi event listeners ya timers hain, unhe yahan clear kar sakte ho
   }
 
-  render() {
-    // state se name, location, avatar_url, loading destructure kiya
+  render() {    // state se name, location, avatar_url, loading destructure kiya
     const { name, location, avatar_url } = this.state.userInfo;
-    const { loading } = this.state;    return (
+    const { loading } = this.state;
+    
+    return (
       <div className="user-card max-w-sm mx-auto bg-white rounded-lg shadow-lg p-6 text-center">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">Name: {name}</h2>
         {/* Agar loading hai toh Shimmer dikhaye, warna avatar dikhaye */}
@@ -57,7 +71,9 @@ class UserClass extends React.Component {  constructor(props) {
             className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-gray-200 shadow-lg hover:scale-105 transition-transform duration-300 object-cover" 
           />
         )}
-        <h3 className="text-lg text-gray-600 mb-2">Location: {location}</h3>
+        <h3 className="text-lg text-gray-600 mb-2">
+          Location: {location || "Not specified"}
+        </h3>
         <h4 className="text-md text-gray-500">Contact: @treddytech</h4>
       </div>
     );

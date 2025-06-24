@@ -19,63 +19,6 @@ const Contact = lazy(() => import("./Components/Contact"));
 const Grocery = lazy(() => import("./Components/Grocery"));
 const RestaurantMenu = lazy(() => import("./Components/RestaurantMenu"));
 
-//  const styleCard = {
-//   backgroundColor: '#f0f0f0',
-// };
-// ...existing imports and code...
-
-
-
-const IMG_CDN_URL =
-  "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/";
-
-const RestaurantCard = (props) => {
-  const { resData } = props;
-  const {
-    cloudinaryImageId,
-    name,
-    cuisines,
-    avgRating,
-    costForTwo,
-    deliveryTime,
-  } = resData?.data;
-
-  return (
-    <div className="m-4 p-4 w-[250px] bg-gray-100 rounded-lg hover:bg-gray-200 transition-all">
-      <div>
-        <img
-          className="w-[250px] h-[150px] rounded-lg"
-          src={IMG_CDN_URL + cloudinaryImageId}
-          alt={name}
-        />
-      </div>
-
-      <div>
-        <h3 className="font-bold py-4 text-lg">{name}</h3>
-        <hr />
-        <em>{cuisines.join(', ')}</em>
-        <h4 className="avg-rating flex items-center mt-2">
-          <span className="icons">
-            <AiOutlineStar />
-          </span>
-          <span className="ml-1">{avgRating} stars</span>
-        </h4>
-        <h4 className="item-price flex items-center">
-          <span>₹{costForTwo / 100} FOR TWO</span>
-        </h4>
-        <h4 className="time flex items-center">
-          <span className="icons">
-            <FiClock />
-          </span>
-          <span className="ml-1">{deliveryTime} minutes</span>
-        </h4>
-      </div>
-    </div>
-  );
-};
-// ...resList array...
-
-
 
 const resList = [
   {
@@ -2121,32 +2064,80 @@ const resList = [
   },
 ];
 
-// * not using keys (not acceptable) <<<< index as a key <<<<<<<<<< unique id (is the best  practice)
 
-// const Body = () => {
-//   return (
-//     <div className="body">
-//       <div className="search-container">
-//         <input type="text" placeholder="Search Food or Restaurant" />
-//         <button>Search</button>
-//       </div>
-//       <div className="res-container">
-//         {resList.map((restaurant) => (
-//           <RestaurantCard key={restaurant.data.id} resData={restaurant} />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
 
-// ...existing imports...
+
+
+
+
+
+
+const IMG_CDN_URL =
+  "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/";
+
+const RestaurantCard = (props) => {
+  const { resData } = props;
+  const {
+    cloudinaryImageId,
+    name,
+    cuisines,
+    avgRating,
+    costForTwo,
+    deliveryTime,
+  } = resData?.data;
+
+  return (
+    <div className="m-4 p-4 w-[250px] bg-gray-100 rounded-lg hover:bg-gray-200 transition-all">
+      <div>
+        <img
+          className="w-[250px] h-[150px] rounded-lg"
+          src={IMG_CDN_URL + cloudinaryImageId}
+          alt={name}
+        />
+      </div>
+
+      <div>
+        <h3 className="font-bold py-4 text-lg text-gray-900">{name}</h3>
+        <hr />
+        <em className="text-gray-800 font-semibold">{cuisines.join(', ')}</em>
+        <h4 className="avg-rating flex items-center mt-2 text-gray-800 font-semibold">
+          <span className="icons">
+            <AiOutlineStar />
+          </span>
+          <span className="ml-1">{avgRating} stars</span>
+        </h4>
+        <h4 className="item-price flex items-center text-gray-800 font-semibold">
+          <span>₹{costForTwo / 100} FOR TWO</span>
+        </h4>
+        <h4 className="time flex items-center text-gray-800 font-semibold">
+          <span className="icons">
+            <FiClock />
+          </span>
+          <span className="ml-1">{deliveryTime} minutes</span>
+        </h4>
+      </div>
+    </div>
+  );
+};
+
+// Modified higher order restaurant card component to show promoted label 
+export const withPromotedLabel = (RestaurantCard) => {
+  return (props) => {
+    return (
+      <div className="relative">
+        <label className="absolute bg-black text-white m-2 p-2 rounded-lg z-10">Promoted</label>
+        <RestaurantCard {...props} />
+      </div>
+    );
+  };
+};
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Use the custom hook
+  const RestaurantCardWithPromotedLabel = withPromotedLabel(RestaurantCard);
   const onlineStatus = useOnlineStatus();
 
   // Show offline message if user is offline
@@ -2158,7 +2149,6 @@ const Body = () => {
     );
   }
 
-  // ...rest of your Body component code...
   useEffect(() => {
     setLoading(true);
     const timer = setTimeout(() => {
@@ -2189,6 +2179,7 @@ const Body = () => {
       return () => clearTimeout(timer);
     }
   }, [searchText]);
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4">
@@ -2237,7 +2228,11 @@ const Body = () => {
                 to={`/restaurants/${restaurant.data.id}`}
                 className="group"
               >
-                <RestaurantCard resData={restaurant} />
+                {restaurant.data.promoted ? (
+                  <RestaurantCardWithPromotedLabel resData={restaurant} />
+                ) : (
+                  <RestaurantCard resData={restaurant} />
+                )}
               </Link>
             ))
           )}
@@ -2269,7 +2264,6 @@ const AppLayout = () => {
     </div>
   );
 };
-
 
 
 
