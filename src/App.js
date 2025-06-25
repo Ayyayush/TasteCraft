@@ -12,6 +12,8 @@ import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { FiClock } from 'react-icons/fi';
 import { AiOutlineStar } from 'react-icons/ai';
+import {RestaurantCategory} from "./Components/RestaurantCategory";
+import UserContext from ".././utils/UserContext";
 
 // Lazy loading components for better performance
 const About = lazy(() => import("./Components/About"));
@@ -2254,17 +2256,31 @@ const Footer = () => (
 );
 
 
- 
-const AppLayout = () => {
+ const AppLayout = () => {
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    // Make an API call and send username and password
+    const data = {
+      name: 'Ayush Pandey',
+    };
+    console.log(data.name);
+    setUsername(data.name);
+    // API
+  }, []);
+
   return (
-    <div className="app">
-      <Header />
-      <Outlet/>
-      <Footer />
-    </div>
+    <UserContext.Provider value={{ loggedInUser: username }}>
+      <div className="app">
+        <Header />
+        <Outlet />
+        <Footer />
+      </div>
+    </UserContext.Provider>
   );
 };
 
+export default AppLayout;
 
 
 const appRouter = createBrowserRouter([
@@ -2296,6 +2312,9 @@ path: "restaurants/:resid", // <-- dynamic route
     ],
   },
 ]);
+
+
+
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
