@@ -14,12 +14,17 @@ import { FiClock } from 'react-icons/fi';
 import { AiOutlineStar } from 'react-icons/ai';
 import {RestaurantCategory} from "./Components/RestaurantCategory";
 import UserContext from ".././utils/UserContext";
+import { Provider } from "react-redux";
+import appStore from "../utils/appStore";
+import Cart from "./Components/Cart";
+
 
 // Lazy loading components for better performance
 const About = lazy(() => import("./Components/About"));
 const Contact = lazy(() => import("./Components/Contact"));
 const Grocery = lazy(() => import("./Components/Grocery"));
 const RestaurantMenu = lazy(() => import("./Components/RestaurantMenu"));
+const Cart = lazy(() => import("./Components/Cart"));
 
 
 const resList = [
@@ -2077,6 +2082,8 @@ const resList = [
 const IMG_CDN_URL =
   "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/";
 
+
+  
 const RestaurantCard = (props) => {
   const { resData } = props;
   const {
@@ -2270,6 +2277,7 @@ const Footer = () => (
   }, []);
 
   return (
+    <Provider store={appStore}>
     <UserContext.Provider value={{ loggedInUser: username }}>
       <div className="app">
         <Header />
@@ -2277,10 +2285,13 @@ const Footer = () => (
         <Footer />
       </div>
     </UserContext.Provider>
+    </Provider>
+
   );
 };
 
 export default AppLayout;
+
 
 
 const appRouter = createBrowserRouter([
@@ -2309,6 +2320,10 @@ const appRouter = createBrowserRouter([
 path: "restaurants/:resid", // <-- dynamic route
         element: <RestaurantMenu />,
       },
+      {
+      path: "/cart",
+      element: <Cart />
+    }
     ],
   },
 ]);

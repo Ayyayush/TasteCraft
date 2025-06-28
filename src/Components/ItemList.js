@@ -1,6 +1,8 @@
 import { IMG_URL } from '../utils/constants';
+import { useDispatch } from 'react-redux';
+import { addItemToCart } from '../utils/cartSlice';
 
-// Mock menu items data (this should eventually come from props)
+// Mock menu items data (used if no props passed)
 const mockMenuItems = [
   {
     card: {
@@ -17,7 +19,7 @@ const mockMenuItems = [
   {
     card: {
       info: {
-        id: "2", 
+        id: "2",
         name: "Dal Makhani",
         description: "Rich black lentils cooked in butter and cream",
         price: 25000,
@@ -60,9 +62,15 @@ const mockMenuItems = [
   }
 ];
 
-const ItemList = ({ items, dummy }) => {
-  // Use props if available, otherwise fall back to mock data
+const ItemList = ({ items }) => {
   const menuItems = items || mockMenuItems;
+  const dispatch = useDispatch();
+
+  const handleAddItem = (item) => {
+    // Dispatch an action to add item to cart
+    console.log("Adding item to cart:", item.card.info.name);
+    dispatch(addItemToCart(item.card.info));
+  };
 
   return (
     <div>
@@ -71,11 +79,12 @@ const ItemList = ({ items, dummy }) => {
           key={item.card.info.id}
           className="p-4 m-2 border-b-2 text-left flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
         >
+          {/* Text Info */}
           <div className="w-full md:w-9/12">
             <div className="py-2">
               <span className="font-semibold text-lg">{item.card.info.name}</span>
-              <span className="text-green-600 font-bold">
-                - ₹
+              <span className="text-green-600 font-bold ml-1">
+                ₹
                 {item.card.info.price
                   ? item.card.info.price / 100
                   : item.card.info.defaultPrice / 100}
@@ -83,6 +92,8 @@ const ItemList = ({ items, dummy }) => {
             </div>
             <p className="text-sm text-gray-600">{item.card.info.description}</p>
           </div>
+
+          {/* Image and Add Button */}
           <div className="w-full md:w-3/12 relative flex justify-center">
             <div className="relative">
               <img
@@ -90,8 +101,11 @@ const ItemList = ({ items, dummy }) => {
                 alt={item.card.info.name}
                 className="w-32 h-24 md:w-full md:h-20 rounded-md object-cover"
               />
-              <button className="absolute bottom-2 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-lg bg-black text-white shadow-lg hover:bg-white hover:text-black transition-all duration-300 text-sm font-bold">
-                Add +
+              <button 
+                className="absolute bottom-1 right-1 bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-full shadow-md transition duration-300"
+                onClick={() => handleAddItem(item)}
+              >
+                + Add
               </button>
             </div>
           </div>

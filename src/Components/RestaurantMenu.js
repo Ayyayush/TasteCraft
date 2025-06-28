@@ -6,8 +6,8 @@ import RestaurantCategory from "./RestaurantCategory";
 const RestaurantMenu = () => {
   const [resInfo, setResInfo] = useState(null);
   const [categories, setCategories] = useState([]);
-  const [showIndex, setShowIndex] = useState(0);
-  
+  const [showIndex, setShowIndex] = useState(null); // Initially, nothing open
+
   const { resid } = useParams();
 
   useEffect(() => {
@@ -123,16 +123,20 @@ const RestaurantMenu = () => {
       <p className="font-bold text-lg">
         {resInfo?.cuisines.join(", ")} - {resInfo?.costForTwoMessage}
       </p>
-      
+
       {/* Categories accordion */}
-      {categories.map((category, index) => (
-        <RestaurantCategory
-          key={category?.card?.card.title}
-          data={category?.card?.card}
-          showItems={index === showIndex ? true : false}
-          setShowIndex={() => setShowIndex(index)}
-        />
-      ))}
+      <div className="mt-6">
+        {categories.map((category, index) => (
+          <RestaurantCategory
+            key={category?.card?.card.title}
+            data={category?.card?.card}
+            showItems={index === showIndex}
+            setShowIndex={() =>
+              setShowIndex(index === showIndex ? null : index)
+            } // ✅ toggle open/close
+          />
+        ))}
+      </div>
     </div>
   );
 };

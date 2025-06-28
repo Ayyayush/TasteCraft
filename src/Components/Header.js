@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../../utils/useOnlineStatus";
 import UserContext from "../../utils/UserContext";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [btnNameReact, setBtnNameReact] = useState("Login");
@@ -9,6 +10,11 @@ const Header = () => {
 
   const { loggedInUser } = useContext(UserContext);
   console.log(loggedInUser);
+
+
+  // selector
+  const cartItems = useSelector((store) => store.cart.items);
+  const totalQuantity = useSelector((store) => store.cart.totalQuantity);
 
   return (
     <header
@@ -47,13 +53,8 @@ const Header = () => {
               Grocery
             </Link>
           </li>
-          <li className="px-4">
-            <Link className="links">Cart</Link>
-          </li>
-          <li className="px-4">
-            <span className="text-yellow-200">
-              {loggedInUser ? `Hello, ${loggedInUser}` : "Guest"}
-            </span>
+          <li className="px-4 font-bold text-xl">
+            <Link to="/cart" className="links">Cart({totalQuantity})</Link>
           </li>
           <button
             className="loginBtn px-4 py-2 bg-white text-green-700 rounded hover:bg-gray-100 transition-colors"
@@ -66,6 +67,13 @@ const Header = () => {
           >
             {btnNameReact}
           </button>
+
+             <li className="px-4">
+            <span className="text-yellow-200">
+              {loggedInUser ? `Hey,${loggedInUser}` : "Guest"}
+            </span>
+          </li>
+       
         </ul>
       </div>
     </header>

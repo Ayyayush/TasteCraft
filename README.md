@@ -244,11 +244,11 @@ In your existing project
 
 
 
-// ...existing code...
 /* Components of Our Food-Order App
  * Header
  * - Logo
  * - Nav Items
+ * - Cart
  * Body
  * - Search Bar
  * - Restaurant-Container
@@ -261,6 +261,26 @@ In your existing project
  * - Address
  * - Contact
  */
+
+
+
+
+## Redux Toolkit
+
+Install @reduxjs/toolkit and react-redux
+```
+npm install @reduxjs/toolkit react-redux
+Build our store 
+Connect our store to our app
+Slice (cartslice)
+Dispatch (action)
+Selector 
+
+```
+
+
+
+
 
 
 
