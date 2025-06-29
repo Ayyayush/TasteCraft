@@ -1,315 +1,299 @@
-## Namaste React Course by Akshay Saini
+# React Learning Notes
 
-# _Episode 01 - Inception_
+---
 
-## Coding :
+## 🧠 Day 1 - The First Spark
 
-- Set up all the `tools in your laptop`
+### 🔧 Coding Tasks:
+
+- Install necessary tools:
   - `VS Code`
   - `Chrome`
-  - `Extensions of Chrome`
-- Create a `new Git repo`
-- Build your `first Hello World` program using,
-  - Using `just HTML`
-  - Using `JS to manipulate the DOM`
-  - Using `React`
-    - `use CDN Links`
-    - `Create an Element`
-    - `Create nested React Elements`
-    - `Use root.render`
+  - `Chrome Extensions`
+- Create a new `Git Repository`
+- Build Hello World:
+  - Using `HTML`
+  - Using `JavaScript DOM`
+  - Using `React` via:
+    - `CDN Links`
+    - `React.createElement`
+    - `Nested Elements`
+    - `root.render` usage
 
+---
 
+## 🚀 Day 2 - Kickstarting the Engine
 
+### 🔧 Setup with Parcel:
 
+- Initialize `npm`
+- Install `react` and `react-dom`
+- Remove old CDN links
+- Install and configure `Parcel`
+- Run project with `parcel`:
+  - Add `"start"` and `"build"` scripts
+- Add `.gitignore`
+- Add `browserslist` for prod
+- Build a production version using `parcel build`
 
+---
 
-## Namaste React Course by Akshay Saini
+## 🧱 Day 3 - Foundation Blocks
 
-# _Episode 02 - Igniting Our App_
+### 🧪 Coding Assignments:
 
-## Coding :
+- Create nested header using `React.createElement`:
+  - (h1, h2, h3 inside `div.title`)
+- Create same structure using `JSX`
+- Build a functional component using JSX
+- Pass attributes in JSX
+- Component Composition (Component inside Component)
+- Difference between:
+  - `{TitleComponent}`
+  - `{<TitleComponent />}`
+  - `{<TitleComponent></TitleComponent>}`
+- Create `Header Component`:
+  - Left: Logo
+  - Middle: Search Bar
+  - Right: User Icon
+  - Add CSS styling
 
-In your existing project
-
-- initialize `npm` into your repo
-- install `react and `react-dom`
-- remove CDN links of react
-- install parcel
-- ignite your app with `parcel`
-- add script for "start" and "build" with parcel commands
-- add `.gitignore` file
-- add `browserlists`
-- build a production version of your code using `parcel build`
-
-
-
-
-
-
-
-
-## Namaste React Course by Akshay Saini
-# Chapter 03 - Laying the Foundation Coding Assignment
-## Q: Create a `Nested header Element` using `React.createElement`(h1,h2,h3 inside a div with class "title")
-## Q: Create the `same element using JSX`
-## Q: Create a `functional component of the same with JSX`
-## Q: Pass `attribute into the tag in JSX`
-## Q: `Composition of Component` (Add a component inside another)
-## Q: `{TitleComponent}` vs `{<TitleComponent/>}` vs `{<TitleComponent></TitleComponent>}` in JSX.
-## Q: Create a `Header Component from scratch` using `Functional Component with JSX`
-
-- Add a Logo on Left
-- Add a search bar in middle
-- Add User icon on right
-- Add CSS to make it look nice
-
-## References:
+### 🔗 References:
 
 - [Babel](https://babeljs.io)
-- [Attribute Types](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#attr-type)
-- [JS Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+- [HTML Script Types](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#attr-type)
+- [JavaScript Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
 - [Babel Playground](https://babeljs.io/repl)
 - [React Without JSX](https://reactjs.org/docs/react-without-jsx.html)
 
-## Q: Create a `Header Component from scratch` using `Functional Component with JSX`
+### ✅ Demo:
 
-## A: [Header Component](https://header-assignment.netlify.app/)
+- [Header Component Demo](https://header-assignment.netlify.app/)
 
+---
 
+## 🍽️ Day 4 - Building the Baseplate
 
+### 🔧 Food App Layout:
 
+- Build a `Food Ordering App`:
+  - Decide app name
+  - Create `AppLayout`
+  - `Header` with Logo, Nav, Cart
+  - `Body` component:
+    - `RestaurantList`
+    - `RestaurantCard`:
+      - Use static data
+      - Convert to dynamic via `props`, destructuring
+      - Render using `Array.map()`
 
+### ✅ Demo:
 
+- [Food App Layout](https://food-app-basic-layout.netlify.app/)
 
-## Namaste React Course by Akshay Saini
+---
 
-# Episode 04 - Talk is Cheap, show me the code!
+## 🧲 Day 5 - Getting Hooked
 
-## Coding Assignment:
+### 🧠 Theory:
 
-- Build a `Food Ordering App`
-  - Think of a `cool name` for your app
-  - Build an `AppLayout`
-  - Build a `Header Component` with Logo & Nav Items & Cart
-  - Build a `Body Component`
-    - Build `RestaurantList Component`
-    - Build `RestaurantCard Component`
-      - Use `static data initially`
-      - Make your `card dynamic`(pass in props)
-        - `Props` - passing arguments to a function - Use Destructuring & Spread operator
-      - `Render` your cards with dynamic data of restaurants
-      - Use `Array.map` to render all the restaurants
-
-## [😋 Food App Basic Layout 😍](https://food-app-basic-layout.netlify.app/)
-
-
-
-## Namaste React Course by Akshay Saini
-
-# Episode 05 - Let's get Hooked!
-
-## Theory:
-
-- What is the `difference` between `Named export`, `Default export`, and `* as export`?
+- Export types: `Named`, `Default`, `* as`
 - What are `React Hooks`?
-- Why do we need `useState Hook`?
+- Why `useState` is used?
 
-## Code:
+### 🔧 Coding:
 
-- `Clean up` your code.
-- Create a `Folder Structure` for your app.
-- Make `different files` for each Component.
-- Create a `config file`.
-- Use all types of `import and export`.
-- Create a `Restaurant Filter button`
-- Use `useState` to create a variable and `bind` it to the `Restaurant Filter Button`.
-- Try to make your `Filter Button Work`.
+- Clean code structure
+- Move components to separate files
+- Create a `config.js`
+- Try all import/export types
+- Add filter button for restaurants
+- Use `useState` to control button
 
-## References:
+---
 
-- [Akshay Saini Code Link](https://bitbucket.org/namastedev/namaste-react-live/src/master/)
+## 🌍 Day 6 - Journey Through Effects
 
-
-
-
-
-
-
-
-## Namaste React Course by Akshay Saini
-
-# Episode 06 - Exploring the world
-
-## Theory Assignment:
+### 🧠 Theory Assignments:
 
 - What is `Microservice`?
-- What is `Monolith architecture`?
-- What is the `difference` between `Monolith and Microservice?
-- Why do we need a `useEffect Hook`?
+- What is `Monolith`?
+- Monolith vs Microservice
+- What is `useEffect`?
 - What is `Optional Chaining`?
 - What is `Shimmer UI`?
-- What is the `difference` between `JS expression and JS statement`?
-- What is `Conditional Rendering`? explain with a code example.
+- Difference between `JS Expression` vs `JS Statement`
+- Explain `Conditional Rendering` (with example)
 - What is `CORS`?
-- What is `async and await`?
-- What is the use of `const json = await data.json()`; in `getRestaurants()`?
+- What is `async/await`?
+- Why use `await data.json()`?
 
-## Coding Assignment:
+### 🔧 Coding:
 
-- Play with the `useEffect Hook` to see when it is called? (before or after render)
-- Play with the `dependency array` in useEffect Hook.
-- Play with the `developer console` by putting a `debugger` in render and `useEffect`.
-- Call an `actual API call`.
-- `Handle Error` in your `API call`.
-- Build `Shimmer UI` when `data is not loaded`.
-- `Render your UI` with `actual API data`.
-- Make `Search functionality` work.
-- Make a `Login Logout` button that `toggles with a state`.
+- Play with `useEffect` (log order)
+- Try different `dependency arrays`
+- Use `debugger` in render/useEffect
+- Call real API using fetch
+- Handle fetch errors
+- Show shimmer UI when loading
+- Render UI with API data
+- Add search functionality
+- Create login/logout button via state
 
-## References:
+---
 
-- [Akshay Saini Code Link](https://bitbucket.org/namastedev/namaste-react-live/src/master/)
+## 🧭 Day 7 - Routing the Right Way
 
+### 🧠 Theory:
 
-
-
-
-
-## Namaste React Course by Akshay Saini
-
-# Episode 07 - Finding the Path
-
-## Theory Assignment:
-
-- What are various ways to `add images` into our App? Explain with `code examples`.
-- What would happen if we do `console.log(useState())`?
-- How will `useEffect` behave if we `don't add` a `dependency array`?
+- How to add images in React (code examples)
+- What happens on `console.log(useState())`?
+- Behavior of `useEffect` without deps
 - What is `SPA`?
-- What is the `difference` between `Client Side Routing` and `Server Side Routing`?
+- Difference: `Client-side` vs `Server-side` routing
 
-## Coding Assignment:
+### 🔧 Coding:
 
-- Add `Shimmer Effect without installing a library`.
-- Install `react-router-dom`.
-- Create an `appRouter` and `Provide it to the app`.
-- Create a `Home, About, and Contact Page` with Link (use child routes).
-- Make an `Error page` for `routing errors`.
-- Create a `Restaurant Page` with `dynamic restaurant ID`.
-- (Extra) - Create a `login Page` using `Formik Library`.
+- Add shimmer without external library
+- Install `react-router-dom`
+- Create `appRouter`:
+  - `Home`, `About`, `Contact` (nested routes)
+- Add `Error page`
+- Create dynamic restaurant route (using `params`)
+- (Optional): Add Login Page using `Formik`
 
-## References:
+### 🔗 References:
 
-- [Akshay Saini Code Link](https://bitbucket.org/namastedev/namaste-react-live/src/master/)
 - [React Router DOM](https://reactrouter.com/en/main)
 - [Client Side Routing](https://reactrouter.com/en/main/start/overview)
 - [Formik](https://formik.org/)
 
+---
+
+## 🏛️ Day 8 - Going Classy
+
+### 🧠 Theory:
+
+- Lifecycle order in class components
+- Use of `componentDidMount`, `componentWillUnmount`
+- Why use `super(props)` in constructor?
+- Why `useEffect` callback shouldn’t be async?
+
+### 🔧 Coding:
+
+- Build `class-based` parent & child components
+  - Pass props
+  - Add constructor + state
+  - Update state using `this.setState`
+  - Handle multiple state vars
+  - Log lifecycle methods
+- Add `setInterval` in `componentDidMount`
+  - Cleanup using `clearInterval`
+
+---
+
+## 📦 App Component Structure
+
+```txt
+App
+├── Header
+│   ├── Logo
+│   ├── Nav Items
+│   └── Cart
+├── Body
+│   ├── Search Bar
+│   └── Restaurant Container
+│       └── Restaurant Card
+│           ├── Image
+│           ├── Name, Rating, Cuisine
+│           └── Delivery Time
+└── Footer
+    ├── Copyright
+    ├── Links
+    ├── Address
+    └── Contact
 
 
 
 
+## ⚙️ Day 9 - Performance & Splitting
 
+### 🧠 Theory:
+- Single Responsibility Principle
+- Code Splitting (lazy loading components)
+- `React.lazy()` and `<Suspense>`
+- Creating Custom Hooks for modular logic :contentReference[oaicite:1]{index=1}
 
-## Namaste React Course by Akshay Saini
+### 🔧 Coding:
+- Split large components using `React.lazy()`
+- Wrap lazy components with `<Suspense fallback={...}>`
+- Create a custom hook, e.g., `useOnlineStatus()`
+- Refactor fetch logic into hooks
 
-# Episode 08 - Let's get Classy
+---
 
-## Theory Assignment:
+## 🎨 Day 10 - UI Styling Essentials
 
-- What is the `order of life cycle method calls` in `Class Based Components`?
-- Why do we use `componentDidMount`?
-- Why do we use `componentWillUnmount`? Show with `example`.
-- (Research) Why do we use `super(props)` in `constructor`?
-- (Research) Why `can't we have` the `callback function` of `useEffect async`?
+### 🧠 Theory:
+- Styling methods: CSS, SASS/SCSS, styled-components, external UI libs
+- Pros & Cons of Tailwind CSS :contentReference[oaicite:2]{index=2}
+- Understanding `tailwind.config.js` keys: `content`, `theme`, `plugins` :contentReference[oaicite:3]{index=3}
 
-## Coding Assignment:
+### 🔧 Coding:
+- Install Tailwind CSS
+- Build responsive UI using Tailwind
+- Use utility-first classes in JSX
 
-- Create `Class Based` Component.
-  - Create 2 `class-based child components`.
-  - `Pass props` from `Parent to child`.
-  - Create a `constructor`.
-  - Create a `state variable` inside child.
-  - Use `this.setState` to update it.
-  - What if there are `multiple state variables`?
-  - Write a `console.log` for each lifecycle method.
-  - Play with the `console logs` to find out the `correct order of their execution`.
-- Create `interval` inside `componentDidMount`?
-  - Use `clearInterval` to `fix the issue` caused by the `interval`
+---
 
-## References:
+## 🔄 Day 11 - Data is the New Oil
 
-- [React Life Cycle Method Diagram](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
-- [Akshay Saini Code Link](https://bitbucket.org/namastedev/namaste-react-live/src/master/)
+### 🧠 Theory:
+- Higher Order Components (HOC)
+- Controlled vs Uncontrolled components
+- Lifting state and Prop drilling
+- Using Context API for state sharing
 
+### 🔧 Coding:
+- Build a HOC for logging or error boundary
+- Transform a form component into controlled
+- Lift shared state to parent
+- Use `React.createContext()` and `useContext()`
 
+---
 
+## 🛒 Day 12 - Building Our Store
 
-/* Components of Our Food-Order App
- * Header
- * - Logo
- * - Nav Items
- * - Cart
- * Body
- * - Search Bar
- * - Restaurant-Container
- *  - Restaurant-Card
- *    - Img
- *    - Name of Res, Star Rating, cuisine, delivery time.
- * Footer
- * - Copyright
- * - Links
- * - Address
- * - Contact
- */
+### 🧠 Theory:
+- Redux Toolkit setup
+- `createSlice`, store configuration, React-Redux integration
 
+### 🔧 Coding:
+- Install Redux Toolkit & React-Redux
+- Create `cartSlice` with actions and reducer
+- Wrap app with `<Provider store={store}>`
+- Dispatch and select cart state in components
 
+---
 
+## 🧪 Day 13 - Testing Time
 
-## Redux Toolkit
+### 🧠 Theory:
+- Testing strategies: unit, integration, end-to-end
+- Using Jest and React Testing Library
 
-Install @reduxjs/toolkit and react-redux
-```
-npm install @reduxjs/toolkit react-redux
-Build our store 
-Connect our store to our app
-Slice (cartslice)
-Dispatch (action)
-Selector 
+### 🔧 Coding:
+- Install testing libs (`jest`, `@testing-library/react`)
+- Write unit test for a utility function
+- Write integration test for a component with interaction
 
-```
+### 📜 Example Test:
+```js
+import { render, fireEvent } from '@testing-library/react';
+import RestaurantCard from '../components/RestaurantCard';
 
-
-
-### TESTING 
-Unit Testing
-Integration Testing
-End to End Testing
-
-## React Testing Library Setup
-
-Installed packages:
-```
-npm install --save-dev @testing-library/react @testing-library/jest-dom @testing-library/user-event
-npm install --save-dev jest babel-jest @babel/preset-env @babel/preset-react
-```
-
-Test Scripts:
-```
-npm test              # Run tests once
-npm run test:watch    # Run tests in watch mode
-npm run test:coverage # Run tests with coverage report
-```
-
-Test Files:
-- `src/setupTests.js` - Jest setup file
-- `jest.config.js` - Jest configuration
-- `src/Components/__tests__/` - Test files directory 
-
-
-
-
-
-
-
-
-
+test('renders restaurant info and handles click', () => {
+  const res = { name: 'Pizza Place', rating: 4.5 };
+  const { getByText } = render(<RestaurantCard data={res} />);
+  expect(getByText(/Pizza Place/)).toBeInTheDocument();
+});
