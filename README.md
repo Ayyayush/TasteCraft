@@ -87,7 +87,7 @@
       - Convert to dynamic via `props`, destructuring
       - Render using `Array.map()`
 
-### ✅ Demo:
+
 
 - [Food App Layout](https://food-app-basic-layout.netlify.app/)
 
