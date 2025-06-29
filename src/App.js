@@ -16,7 +16,7 @@ import {RestaurantCategory} from "./Components/RestaurantCategory";
 import UserContext from ".././utils/UserContext";
 import { Provider } from "react-redux";
 import appStore from "../utils/appStore";
-import Cart from "./Components/Cart";
+//import Cart from "./Components/Cart";
 
 
 // Lazy loading components for better performance

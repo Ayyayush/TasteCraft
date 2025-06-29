@@ -11,12 +11,12 @@ const Cart = () => {
     };
     
     return (
-        <div className="cart-container text-center m-4 p-4">
-            <h1 className="text-2xl font-bold">Your Cart</h1>
+        <div className="cart-container text-center m-4 p-4 min-h-screen">
+            <h1 className="text-xl md:text-2xl font-bold">Your Cart</h1>
             {cartItems.length === 0 ? (
                 <p className="text-gray-600 mt-4">Your cart is empty. Add some delicious items!</p>
             ) : (
-                <div className="w-6/12 mx-auto">
+                <div className="w-full max-w-4xl mx-auto px-4">
                     <button 
                         className="p-2 m-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
                         onClick={handleClearCart}

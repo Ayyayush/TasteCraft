@@ -280,6 +280,33 @@ Selector
 
 
 
+### TESTING 
+Unit Testing
+Integration Testing
+End to End Testing
+
+## React Testing Library Setup
+
+Installed packages:
+```
+npm install --save-dev @testing-library/react @testing-library/jest-dom @testing-library/user-event
+npm install --save-dev jest babel-jest @babel/preset-env @babel/preset-react
+```
+
+Test Scripts:
+```
+npm test              # Run tests once
+npm run test:watch    # Run tests in watch mode
+npm run test:coverage # Run tests with coverage report
+```
+
+Test Files:
+- `src/setupTests.js` - Jest setup file
+- `jest.config.js` - Jest configuration
+- `src/Components/__tests__/` - Test files directory 
+
+
+
 
 
 
