@@ -1,7 +1,7 @@
 {
     "scripts": {
         "start": "parcel index.html",
-        "build": "parcel build index.html --dist-dir docs --public-url ./",
+        "build": "parcel build index.html --dist-dir build --public-url ./",
         "build-css": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch",
         "deploy": "npm run build && git add docs && git commit -m 'Deploy to GitHub Pages' && git push",
         "test": "jest",
