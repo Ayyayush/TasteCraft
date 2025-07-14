@@ -1,23 +1,17 @@
 import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
-
-// filepath: src/App.js
 import { useState, useEffect } from "react";
 import Header from "./Components/Header";
-//import Body from './Components/Body';
 import Shimmer from "./Components/Shimmer";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Error from "./Components/Error";
 import { Link } from "react-router-dom"; 
 import useOnlineStatus from "../utils/useOnlineStatus";
-import { FiClock } from 'react-icons/fi';
-import { AiOutlineStar } from 'react-icons/ai';
+import { Clock, Star, MapPin } from 'lucide-react';
 import {RestaurantCategory} from "./Components/RestaurantCategory";
 import UserContext from ".././utils/UserContext";
 import { Provider } from "react-redux";
 import appStore from "../utils/appStore";
-//import Cart from "./Components/Cart";
-
 
 // Lazy loading components for better performance
 const About = lazy(() => import("./Components/About"));
@@ -25,7 +19,6 @@ const Contact = lazy(() => import("./Components/Contact"));
 const Grocery = lazy(() => import("./Components/Grocery"));
 const RestaurantMenu = lazy(() => import("./Components/RestaurantMenu"));
 const Cart = lazy(() => import("./Components/Cart"));
-
 
 const resList = [
   {
@@ -2071,19 +2064,9 @@ const resList = [
   },
 ];
 
-
-
-
-
-
-
-
-
 const IMG_CDN_URL =
   "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/";
 
-
-  
 const RestaurantCard = (props) => {
   const { resData } = props;
   const {
@@ -2093,38 +2076,86 @@ const RestaurantCard = (props) => {
     avgRating,
     costForTwo,
     deliveryTime,
+    aggregatedDiscountInfoV2,
+    locality,
   } = resData?.data;
 
+  const getRatingColor = (rating) => {
+    const numRating = parseFloat(rating);
+    if (numRating >= 4.0) return 'bg-green-500';
+    if (numRating >= 3.5) return 'bg-orange-500';
+    return 'bg-red-500';
+  };
+
   return (
-    <div className="m-4 p-4 w-[250px] bg-gray-100 rounded-lg hover:bg-gray-200 transition-all">
-      <div>
+    <div className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden border border-gray-100">
+      {/* Discount Badge */}
+      {aggregatedDiscountInfoV2?.header && (
+        <div className="absolute top-4 left-4 z-20">
+          <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+            {aggregatedDiscountInfoV2.header}
+          </div>
+        </div>
+      )}
+
+      {/* Image Container */}
+      <div className="relative overflow-hidden rounded-t-2xl">
         <img
-          className="w-[250px] h-[150px] rounded-lg"
+          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
           src={IMG_CDN_URL + cloudinaryImageId}
           alt={name}
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
-      <div>
-        <h3 className="font-bold py-4 text-lg text-gray-900">{name}</h3>
-        <hr />
-        <em className="text-gray-800 font-semibold">{cuisines.join(', ')}</em>
-        <h4 className="avg-rating flex items-center mt-2 text-gray-800 font-semibold">
-          <span className="icons">
-            <AiOutlineStar />
-          </span>
-          <span className="ml-1">{avgRating} stars</span>
-        </h4>
-        <h4 className="item-price flex items-center text-gray-800 font-semibold">
-          <span>₹{costForTwo / 100} FOR TWO</span>
-        </h4>
-        <h4 className="time flex items-center text-gray-800 font-semibold">
-          <span className="icons">
-            <FiClock />
-          </span>
-          <span className="ml-1">{deliveryTime} minutes</span>
-        </h4>
+      {/* Content */}
+      <div className="p-6">
+        {/* Restaurant Name */}
+        <h3 className="font-bold text-xl text-gray-900 mb-2 line-clamp-1 group-hover:text-blue-600 transition-colors duration-200">
+          {name}
+        </h3>
+
+        {/* Cuisines */}
+        <p className="text-gray-600 text-sm mb-3 line-clamp-1">
+          {cuisines.join(', ')}
+        </p>
+
+        {/* Location */}
+        <div className="flex items-center text-gray-500 text-sm mb-4">
+          <MapPin className="w-4 h-4 mr-1" />
+          <span className="line-clamp-1">{locality}</span>
+        </div>
+
+        {/* Stats Row */}
+        <div className="flex items-center justify-between mb-4">
+          {/* Rating */}
+          <div className="flex items-center">
+            <div className={`${getRatingColor(avgRating)} text-white px-2 py-1 rounded-lg flex items-center text-sm font-semibold`}>
+              <Star className="w-3 h-3 mr-1 fill-current" />
+              <span>{avgRating}</span>
+            </div>
+          </div>
+
+          {/* Delivery Time */}
+          <div className="flex items-center text-gray-600 text-sm">
+            <Clock className="w-4 h-4 mr-1" />
+            <span className="font-medium">{deliveryTime} mins</span>
+          </div>
+        </div>
+
+        {/* Price */}
+        <div className="flex items-center justify-between">
+          <div className="text-lg font-bold text-gray-900">
+            ₹{costForTwo / 100} for two
+          </div>
+          <div className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
+            {resData.data.totalRatingsString}
+          </div>
+        </div>
       </div>
+
+      {/* Hover Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-blue-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
     </div>
   );
 };
@@ -2134,7 +2165,11 @@ export const withPromotedLabel = (RestaurantCard) => {
   return (props) => {
     return (
       <div className="relative">
-        <label className="absolute bg-black text-white m-2 p-2 rounded-lg z-10">Promoted</label>
+        <div className="absolute -top-2 -right-2 z-30">
+          <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse">
+            ⭐ Promoted
+          </div>
+        </div>
         <RestaurantCard {...props} />
       </div>
     );
@@ -2152,8 +2187,14 @@ const Body = () => {
   // Show offline message if user is offline
   if (!onlineStatus) {
     return (
-      <div style={{ textAlign: "center", marginTop: "2rem", color: "red" }}>
-        <h1>You are currently offline. Please check your internet connection.</h1>
+      <div className="min-h-screen bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center">
+        <div className="text-center p-8 bg-white rounded-2xl shadow-xl max-w-md">
+          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-2xl">📡</span>
+          </div>
+          <h1 className="text-2xl font-bold text-red-600 mb-2">You're Offline</h1>
+          <p className="text-gray-600">Please check your internet connection and try again.</p>
+        </div>
       </div>
     );
   }
@@ -2190,27 +2231,38 @@ const Body = () => {
   }, [searchText]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="mb-8">
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-center mb-6">
-            <div className="flex w-full md:w-96">
-              <input
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                type="text"
-                placeholder="Search a restaurant you want..."
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-              <button 
-                className="px-6 py-3 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+      {/* Header Section */}
+      <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold mb-2">Discover Great Food</h1>
+            <p className="text-blue-100 text-lg">Order from the best restaurants near you</p>
+          </div>
+          
+          <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
+            <div className="flex w-full md:w-96 shadow-lg">
+             <input
+  className="flex-1 px-6 py-4 rounded-l-xl 
+             bg-white/80 shadow-md 
+             text-gray-900 placeholder-gray-700 
+             focus:outline-none focus:ring-2 focus:ring-white/30 
+             border border-white/40"
+  type="text"
+  placeholder="Search restaurants, cuisines..."
+  value={searchText}
+  onChange={(e) => setSearchText(e.target.value)}
+  onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+/>
+ <button 
+                className="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-r-xl transition-colors duration-200 font-semibold shadow-lg"
                 onClick={handleSearch}
               >
                 Search
               </button>
             </div>
             <button
-              className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium whitespace-nowrap"
+              className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-xl hover:bg-white/20 transition-all duration-200 font-semibold border border-white/20 whitespace-nowrap"
               onClick={() => {
                 setLoading(true);
                 const filteredList = resList.filter(
@@ -2222,30 +2274,50 @@ const Body = () => {
                 }, 500);
               }}
             >
-              Top Rated Restaurants
+              ⭐ Top Rated
             </button>
           </div>
         </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {loading ? (
-            <Shimmer />
-          ) : (
-            filteredRestaurants.map((restaurant) => (
-              <Link
-                key={restaurant.data.id}
-                to={`/restaurants/${restaurant.data.id}`}
-                className="group"
-              >
-                {restaurant.data.promoted ? (
-                  <RestaurantCardWithPromotedLabel resData={restaurant} />
-                ) : (
-                  <RestaurantCard resData={restaurant} />
-                )}
-              </Link>
-            ))
-          )}
-        </div>
+      </div>
+
+      {/* Results Section */}
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        {loading ? (
+          <Shimmer />
+        ) : filteredRestaurants.length === 0 ? (
+          <div className="text-center py-16">
+            <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <span className="text-4xl">🔍</span>
+            </div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">No restaurants found</h2>
+            <p className="text-gray-600">Try searching with different keywords</p>
+          </div>
+        ) : (
+          <>
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-bold text-gray-800">
+                {searchText ? `Results for "${searchText}"` : 'All Restaurants'}
+                <span className="text-gray-500 font-normal ml-2">({filteredRestaurants.length} found)</span>
+              </h2>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {filteredRestaurants.map((restaurant) => (
+                <Link
+                  key={restaurant.data.id}
+                  to={`/restaurants/${restaurant.data.id}`}
+                  className="group"
+                >
+                  {restaurant.data.promoted ? (
+                    <RestaurantCardWithPromotedLabel resData={restaurant} />
+                  ) : (
+                    <RestaurantCard resData={restaurant} />
+                  )}
+                </Link>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
@@ -2254,16 +2326,17 @@ const Body = () => {
 const currYear = new Date().getFullYear();
 
 const Footer = () => (
-  <footer className="text-white py-4 mt-8" style={{backgroundColor: '#9BC09C'}}>
-    <p className="text-center">
-      Copyright &copy; {new Date().getFullYear()}, Built by{" "}
-      <strong>AYUSH🚀</strong>
-    </p>
+  <footer className="bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-500 text-white py-4 mt-8">
+    <div className="max-w-7xl mx-auto px-4 text-center">
+      <p className="text-gray-300">
+        Copyright &copy; {currYear}, Built with  by{" "}
+        <strong className="text-white">AYUSH🚀</strong>
+      </p>
+    </div>
   </footer>
 );
 
-
- const AppLayout = () => {
+const AppLayout = () => {
   const [username, setUsername] = useState('');
 
   useEffect(() => {
@@ -2278,21 +2351,18 @@ const Footer = () => (
 
   return (
     <Provider store={appStore}>
-    <UserContext.Provider value={{ loggedInUser: username }}>
-      <div className="app">
-        <Header />
-        <Outlet />
-        <Footer />
-      </div>
-    </UserContext.Provider>
+      <UserContext.Provider value={{ loggedInUser: username }}>
+        <div className="app">
+          <Header />
+          <Outlet />
+          <Footer />
+        </div>
+      </UserContext.Provider>
     </Provider>
-
   );
 };
 
 export default AppLayout;
-
-
 
 const appRouter = createBrowserRouter([
   {
@@ -2305,36 +2375,32 @@ const appRouter = createBrowserRouter([
         element: <Body />,
       },
       {
-        path: "about", // <-- lowercase, no slash
+        path: "about",
         element: <About />,
       },
       {
-        path: "contact", // <-- lowercase, no slash
+        path: "contact",
         element: <Contact />,
       },
       {
-        path: "grocery", // <-- lowercase, no slash
+        path: "grocery",
         element: <Grocery />,
       },
       {
-path: "restaurants/:resid", // <-- dynamic route
+        path: "restaurants/:resid",
         element: <RestaurantMenu />,
       },
       {
-      path: "/cart",
-      element: <Cart />
-    }
+        path: "/cart",
+        element: <Cart />
+      }
     ],
   },
 ]);
 
-
-
-
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Suspense fallback={<div style={{textAlign: 'center', marginTop: '2rem'}}>Loading...</div>}>
+  <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="text-xl">Loading...</div></div>}>
     <RouterProvider router={appRouter} />
   </Suspense>
 );
