@@ -2,7 +2,7 @@
 
 ---
 
-## 🧠 Day 1 - The First Spark
+## 🧠 Day 1 - The First Spark - Inception
 
 ### 🔧 Coding Tasks:
 
